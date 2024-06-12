@@ -283,7 +283,7 @@ export default class Api {
     async getSubmissions(contestId: string, problemId: string) {
         const api = await this.getApi();
         const res = await fetch(
-            `${api.url}/api/c/${contestId}/problem_submissions/${problemId}/`,
+            `${api.url}/api/c/${contestId}/problem_submission_list/${problemId}/`,
             {
                 headers: {
                     Accept: "application/json",

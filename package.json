@@ -1,0 +1,125 @@
+{
+  "name": "sio2",
+  "displayName": "sio2",
+  "description": "Integration with SIO2 API",
+  "version": "0.0.1",
+  "repository": "https://github.com/fmkra/vscode-sio2",
+  "engines": {
+    "vscode": "^1.87.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "sio2-sidebar",
+          "title": "SIO2",
+          "icon": "assets/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "sio2-sidebar": [
+        {
+          "id": "sio2-problems",
+          "name": "Zadania"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "sio2.setApiUrl",
+        "title": "SIO2: Change API URL",
+        "icon": "$(gear)"
+      },
+      {
+        "command": "sio2.resetApiUrls",
+        "title": "SIO2: Reset all saved API URLs"
+      },
+      {
+        "command": "sio2.openProblemContent",
+        "title": "SIO2: Open Problem Content",
+        "icon": "$(file-pdf)"
+      },
+      {
+        "command": "sio2.uploadProblemSolution",
+        "title": "SIO2: Upload Problem Solution",
+        "icon": "$(cloud-upload)"
+      },
+      {
+        "command": "sio2.refreshContests",
+        "title": "SIO2: Refresh Contests",
+        "icon": "$(extensions-refresh)"
+      },
+      {
+        "command": "sio2.openSubmitCode",
+        "title": "SIO2: Open Submit Code",
+        "icon": "$(file-code)"
+      }
+    ],
+    "menus": {
+      "view/item/context": [
+        {
+          "command": "sio2.openProblemContent",
+          "when": "view == sio2-problems && viewItem == problem",
+          "group": "inline"
+        },
+        {
+          "command": "sio2.uploadProblemSolution",
+          "when": "view == sio2-problems && viewItem == problem",
+          "group": "inline"
+        },
+        {
+          "command": "sio2.refreshContests",
+          "when": "view == sio2-problems && viewItem == error",
+          "group": "inline"
+        },
+        {
+          "command": "sio2.setApiUrl",
+          "when": "view == sio2-problems && viewItem == error",
+          "group": "inline"
+        },
+        {
+          "command": "sio2.openSubmitCode",
+          "when": "view == sio2-problems && viewItem == submit",
+          "group": "inline"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "sio2.refreshContests",
+          "group": "navigation"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "vscode-test",
+    "vscode:package": "pnpm vsce package --no-dependencies",
+    "vscode:publish": "pnpm vsce publish --no-dependencies"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.87.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.2",
+    "@typescript-eslint/parser": "^7.0.2",
+    "@vscode/test-cli": "^0.0.6",
+    "@vscode/test-electron": "^2.3.9",
+    "eslint": "^8.56.0",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "jszip": "^3.10.1"
+  },
+  "extensionDependencies": []
+}

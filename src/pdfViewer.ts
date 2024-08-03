@@ -1,6 +1,5 @@
 import * as vscode from "vscode";
 import Api from "./api";
-import JSZip from "jszip";
 import { ProblemItem } from "./ProblemsView";
 import { getVariables } from "./utils";
 
@@ -96,19 +95,12 @@ class PdfFileDataProvider {
                     resolve(_data);
                     break;
                 case DataTypeEnum.UINT8ARRAY:
-                    var z = new JSZip();
-                    z.file("filename.pdf", _data);
-                    z.files["filename.pdf"].async("base64").then(
-                        function (f: any) {
-                            resolve(f);
-                        },
-                        function (err: any) {
-                            reject(err);
-                            console.error(
-                                "HINT from PDF Viewer API: There was an error converting the pdf file data from a Uint8Array to a base64 string using JSZip."
-                            );
-                        }
-                    );
+                    let binary = "";
+                    let len = (_data as Uint8Array).byteLength;
+                    for (let i = 0; i < len; i++) {
+                        binary += String.fromCharCode((_data as Uint8Array)[i]);
+                    }
+                    resolve(btoa(binary));
                     break;
 
                 default:
